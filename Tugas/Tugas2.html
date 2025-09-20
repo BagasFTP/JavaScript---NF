@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Pegawai</title>
+</head>
+<body>
+  <h2>Data Pegawai</h2>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Nama Pegawai</th>
+        <th>Umur</th>
+        <th>Jabatan</th>
+        <th>Status</th>
+        <th>Gaji Pokok</th>
+        <th>Tunjangan Jabatan</th>
+        <th>BPJS</th>
+        <th>Tunjangan Keluarga</th>
+      </tr>
+    </thead>
+    <tbody id="dataPegawai">
+        
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="7"><b>Total Gaji</b></td>
+        <td id="totalGaji"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <script>
+    let nama = "dodi prayodi";
+    let umur = 25;
+    let jabatan = "manajer";
+    let status = "menikah";
+
+    let gapok;
+    if (jabatan === "manajer") {
+      gapok = 15000000;
+    } else if (jabatan === "asisten manajer") {
+      gapok = 10000000;
+    } else {
+      gapok = 5000000;
+    }
+
+    let tunjanganJabatan = 0.15 * gapok;
+    let bpjs = 0.10 * gapok;
+    let tunjanganKeluarga = (status === "menikah") ? 0.20 * gapok : 0;
+    let totalGaji = gapok + tunjanganJabatan + bpjs + tunjanganKeluarga;
+
+    document.getElementById("dataPegawai").innerHTML = `
+      <tr>
+        <td>${nama}</td>
+        <td>${umur}</td>
+        <td>${jabatan}</td>
+        <td>${status}</td>
+        <td>${gapok}</td>
+        <td>${tunjanganJabatan}</td>
+        <td>${bpjs}</td>
+        <td>${tunjanganKeluarga}</td>
+      </tr>
+    `;
+
+    document.getElementById("totalGaji").innerText = totalGaji;
+  </script>
+</body>
+</html>
