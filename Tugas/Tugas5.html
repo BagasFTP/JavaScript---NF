@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Manajemen Produk Sederhana</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f1f5f9;
+      color:#1e293b;
+      padding:20px;
+    }
+    h1{ text-align:center; }
+    button{
+      padding:8px 14px;
+      margin:4px 0;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    #tampil{ background:#2563eb; color:white; }
+    #tambah{ background:#16a34a; color:white; }
+    #hapusBtn{ background:#dc2626; color:white; }
+    input{
+      padding:6px 10px;
+      border:1px solid #cbd5e1;
+      border-radius:6px;
+    }
+    pre{
+      background:#0f172a;
+      color:#e2e8f0;
+      padding:12px;
+      border-radius:6px;
+      white-space:pre-wrap;
+      margin-top:12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Manajemen Produk</h1>
+
+  <button id="tampil">Tampilkan Produk</button><br><br>
+  <button id="tambah">Tambah (duplikat terakhir)</button><br><br>
+
+  <label>Id yang akan dihapus: </label>
+  <input id="hapus" placeholder="misal: 2,4">
+  <button id="hapusBtn">Hapus Produk</button>
+
+  <pre id="output"></pre>
+
+<script>
+let produk = [
+  {id:1, nama:"Laptop", harga:12000000},
+  {id:2, nama:"Smartphone", harga:5000000},
+  {id:3, nama:"Mouse", harga:300000},
+  {id:4, nama:"Keyboard", harga:500000},
+  {id:5, nama:"Stand Laptop", harga:50000}
+];
+
+document.getElementById("tampil").addEventListener("click", () => {
+  let teks = "=== DAFTAR PRODUK ===\n";
+  for (const {id, nama, harga} of produk) { 
+    teks += `${id}. ${nama} - Rp${harga}\n`;
+  }
+  document.getElementById("output").textContent = teks;
+});
+
+document.getElementById("tambah").addEventListener("click", () => {
+  if (produk.length === 0) return alert("Belum ada produk.");
+  const terakhir = produk[produk.length - 1];
+  const duplikat = {id: terakhir.id + 1, nama: terakhir.nama, harga: terakhir.harga};
+  produk = [...produk, duplikat]; 
+  alert("Produk terakhir diduplikasi!");
+  document.getElementById("tampil").click();
+});
+
+
+function hapusProduk(...idHapus) {       
+  produk = produk.filter(p => !idHapus.includes(p.id));
+  alert("Produk dengan ID " + idHapus.join(", ") + " dihapus!");
+  document.getElementById("tampil").click();
+}
+
+document.getElementById("hapusBtn").addEventListener("click", () => {
+  const raw = document.getElementById("hapus").value.trim();
+  if (!raw) return;
+  const ids = raw.split(",").map(x => Number(x.trim()));
+  hapusProduk(...ids); 
+});
+</script>
+</body>
+</html>
